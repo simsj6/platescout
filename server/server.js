@@ -14,7 +14,14 @@ const app  = express();
 const PORT = process.env.PORT || 3000;
 
 // Middleware — mount BEFORE any route.
-app.use(cors());
+app.use(cors({
+  origin: [
+    "http://localhost:5173",                       // dev
+    "https://simsj6-platescout.vercel.app",          // <-- your Vercel URL (after Step D)
+    /\.vercel\.app$/,                              // optional: preview branches
+  ],
+  credentials: true,
+}));
 app.use(express.json());
 
 // TODO: Connect Mongoose to MongoDB Atlas.
@@ -179,6 +186,14 @@ app.post("/api/logout", (req, res) => {
 // 404 fallback — must come AFTER every route or it'll eat them.
 app.use((req, res) => {
   return res.status(404).json({ error: "Route not found." });
+});
+
+app.get("/api/health", (req, res) => {
+  res.json({
+    status: "ok",
+    time: new Date().toISOString(),
+    mongo: mongoose.connection.readyState === 1,
+  });
 });
 
 app.listen(PORT, () => {
