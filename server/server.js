@@ -183,17 +183,17 @@ app.post("/api/logout", (req, res) => {
   return res.status(200).json({ message: "Logged out." });
 });
 
-// 404 fallback — must come AFTER every route or it'll eat them.
-app.use((req, res) => {
-  return res.status(404).json({ error: "Route not found." });
-});
-
 app.get("/api/health", (req, res) => {
   res.json({
     status: "ok",
     time: new Date().toISOString(),
     mongo: mongoose.connection.readyState === 1,
   });
+});
+
+// 404 fallback — must come AFTER every route or it'll eat them.
+app.use((req, res) => {
+  return res.status(404).json({ error: "Route not found." });
 });
 
 app.listen(PORT, () => {
