@@ -6,7 +6,7 @@
 
 ## Live URLs
 
-- **Client:** https://platescout.vercel.app
+- **Client:** https://platescout-jennysims.vercel.app
 - **Server:** https://platescout-jennysims.onrender.com
 - **Server health check:** https://platescout-jennysims.onrender.com/api/health
 
